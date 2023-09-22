@@ -5,7 +5,7 @@
 %  /  MUEA - MQ1 - Younes Akhazzan - Joel Rajo - Pol Ruiz - G13                         
 %--------------------------------------------------------------------------
 clc; clear; close all;
-
+%HOLA MÓN
 % Input parameters
 Naux    = [8,16,32,64,128]; % mesh size
 L       = 1;                % domain size
