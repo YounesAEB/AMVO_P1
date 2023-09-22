@@ -9,10 +9,25 @@ function [cu_an,cv_an,du_an,dv_an] = computeAnalyticValues (xsu,xsv,ysu,ysv)
 % L: domain size
 % h: cell size
 
-    cu_an = - 2*pi*cos(2*pi*xsu).*cos(2*pi*ysu).^2.*sin(2*pi*xsu) - 2*pi*cos(2*pi*xsu).*sin(2*pi*xsu).*sin(2*pi*ysu).^2; 
-    cv_an = - 2*pi*cos(2*pi*xsv).^2.*cos(2*pi*ysv).*sin(2*pi*ysv) - 2*pi*cos(2*pi*ysv).*sin(2*pi*xsv).^2.*sin(2*pi*ysv);
+    syms x y
+    u = cos(2*pi*x).*sin(2*pi*y);
+    v = -sin(2*pi*x).*cos(2*pi*y);
 
-    du_an = -8*pi^2*cos(2*pi*xsu).*sin(2*pi*ysu);
-    dv_an = 8*pi^2*cos(2*pi*ysv).*sin(2*pi*xsv);
+    fcu_sym = u*diff(u,x)+v*diff(u,y);
+    fcv_sym = u*diff(v,x)+v*diff(v,y);
+
+    fdu_sym = diff(u,x,x)+diff(u,y,y);
+    fdv_sym = diff(v,x,x)+diff(v,y,y);
+
+    cu_sym = matlabFunction(fcu_sym, 'Vars', [x,y]);
+    cv_sym = matlabFunction(fcv_sym, 'Vars', [x,y]);
+    du_sym = matlabFunction(fdu_sym, 'Vars', [x,y]);
+    dv_sym = matlabFunction(fdv_sym, 'Vars', [x,y]);
+
+    cu_an = cu_sym(xsu,ysu);
+    cv_an = cv_sym(xsv,ysv);
+
+    du_an = du_sym(xsu,ysu);
+    dv_an = dv_sym(xsv,ysv);
     
 end

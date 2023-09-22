@@ -7,15 +7,15 @@
 clc; clear; close all;
 
 % Input parameters
-Naux = [8,16,32,64,128]; % mesh size
-L = 1; % domain size
-error = zeros(size(Naux,2),4);
+Naux    = [8,16,32,64,128]; % mesh size
+L       = 1;                % domain size
+error   = zeros(size(Naux,2),4);
 
 for i=1:size(Naux,2)
     % Preliminary steps 
     N                   = Naux(i);
     [xsu,ysu,xsv,ysv]   = setCoordinates(N,L);
-    [u,v]               = setVelocityField(xsu,ysu,xsv,ysv,N);
+    [u,v]               = setVelocityField(xsu,ysu,xsv,ysv);
     
     % Convective terms computation
     cu = computeConvectiveTerm_u(u,v,L);
