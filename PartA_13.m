@@ -5,17 +5,22 @@
 %  /  MUEA - MQ1 - Younes Akhazzan - Joel Rajo - Pol Ruiz - G13                         
 %--------------------------------------------------------------------------
 clc; clear; close all;
-%HOLA MÓN
+
 % Input parameters
 Naux    = [8,16,32,64,128]; % mesh size
 L       = 1;                % domain size
 error   = zeros(size(Naux,2),4);
+% Initial velocity condition
+syms x y
+u_sym = 10*cos(2*pi*x).*sin(2*pi*y);
+v_sym = -sin(2*pi*x).*cos(2*pi*y);
 
 for i=1:size(Naux,2)
+
     % Preliminary steps 
     N                   = Naux(i);
     [xsu,ysu,xsv,ysv]   = setCoordinates(N,L);
-    [u,v]               = setVelocityField(xsu,ysu,xsv,ysv);
+    [u,v]               = setVelocityField(u_sym,v_sym,xsu,ysu,xsv,ysv);
     
     % Convective terms computation
     cu = computeConvectiveTerm_u(u,v,L);
@@ -26,7 +31,7 @@ for i=1:size(Naux,2)
     dv = computeDiffusiveTerm_v(v,L);
     
     % Analytic values computation
-    [cu_an,cv_an,du_an,dv_an] = computeAnalyticValues(xsu,xsv,ysu,ysv);
+    [cu_an,cv_an,du_an,dv_an] = computeAnalyticValues(u_sym,v_sym,xsu,xsv,ysu,ysv);
     
     % Error computation
     [ecu,ecv,edu,edv]   = computeError(cu,cv,du,dv,cu_an,cv_an,du_an,dv_an,L);
