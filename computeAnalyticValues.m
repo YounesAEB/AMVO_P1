@@ -1,4 +1,4 @@
-function [cu_an,cv_an,du_an,dv_an] = computeAnalyticValues (xsu,xsv,ysu,ysv)
+function [cu_an,cv_an,du_an,dv_an] = computeAnalyticValues (u_sym,v_sym,xsu,xsv,ysu,ysv)
 % computeAnalyticValues derivates and calculates the convective and diffusive
 % term using the anal expressions
 % TBD: symbolic calculation of the expressions
@@ -8,26 +8,25 @@ function [cu_an,cv_an,du_an,dv_an] = computeAnalyticValues (xsu,xsv,ysu,ysv)
 % N: mesh size
 % L: domain size
 % h: cell size
+syms x y 
 
-    syms x y
-    u = cos(2*pi*x).*sin(2*pi*y);
-    v = -sin(2*pi*x).*cos(2*pi*y);
+%     cu_sym = u_sym*diff(u_sym,x)+v_sym*diff(u_sym,y);
+%     cv_sym = u_sym*diff(v_sym,x)+v*diff(v_sym,y);
+    cu_sym = diff(u_sym*u_sym,x)+diff(u_sym*v_sym,y);  % conservative
+    cv_sym = diff(v_sym*u_sym,x)+diff(v_sym*v_sym,y);  % conservative
 
-    fcu_sym = u*diff(u,x)+v*diff(u,y);
-    fcv_sym = u*diff(v,x)+v*diff(v,y);
+    du_sym = diff(u_sym,x,x)+diff(u_sym,y,y);
+    dv_sym = diff(v_sym,x,x)+diff(v_sym,y,y);
 
-    fdu_sym = diff(u,x,x)+diff(u,y,y);
-    fdv_sym = diff(v,x,x)+diff(v,y,y);
+    cu_disc = matlabFunction(cu_sym, 'Vars', [x,y]); % continuous to discrete
+    cv_disc = matlabFunction(cv_sym, 'Vars', [x,y]); % continuous to discrete
+    du_disc = matlabFunction(du_sym, 'Vars', [x,y]); % continuous to discrete
+    dv_disc = matlabFunction(dv_sym, 'Vars', [x,y]); % continuous to discrete
 
-    cu_sym = matlabFunction(fcu_sym, 'Vars', [x,y]);
-    cv_sym = matlabFunction(fcv_sym, 'Vars', [x,y]);
-    du_sym = matlabFunction(fdu_sym, 'Vars', [x,y]);
-    dv_sym = matlabFunction(fdv_sym, 'Vars', [x,y]);
+    cu_an = cu_disc(xsu,ysu); % analitic assignment
+    cv_an = cv_disc(xsv,ysv); % analitic assignment
 
-    cu_an = cu_sym(xsu,ysu);
-    cv_an = cv_sym(xsv,ysv);
-
-    du_an = du_sym(xsu,ysu);
-    dv_an = dv_sym(xsv,ysv);
+    du_an = du_disc(xsu,ysu); % analitic assignment
+    dv_an = dv_disc(xsv,ysv); % analitic assignment
     
 end
