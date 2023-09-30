@@ -9,16 +9,11 @@ clc; clear; close all;
 % Input parameters
 N  = 3;
 L  = 1;                % domain size
-a = 1;
-for t=0:a:10
-    disp(t);
-   a=2;
-    disp(t);
-end
+
 up = zeros(N+2,N+2);
 vp = zeros(N+2,N+2);
 vp = haloUpdate(vp);
-up(2,2) = 1; % imbalance
+up(2,3) = 1; % imbalance
 up = haloUpdate(up);
 [d] = diverg(up,vp,L);
 [b] = field2vector(d);

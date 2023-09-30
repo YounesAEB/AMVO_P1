@@ -1,4 +1,4 @@
-function [Ru,Rv] = computeR(u,v,L)
+function [Ru,Rv] = computeR(u,v,L,nu)
 % computeR(u,v,L) calculates the R term as a function of the velocity
 % fields
 % Written by: Group 13
@@ -14,7 +14,7 @@ function [Ru,Rv] = computeR(u,v,L)
     dv = computeDiffusiveTerm_v(v,L);
 
     % Rn and Rn-1 terms calculation
-    Ru = -cu./(h^2) + du./(h^2);
-    Rv = -cv./(h^2) + dv./(h^2);
+    Ru = -cu./(h^2) + nu*du./(h^2);
+    Rv = -cv./(h^2) + nu*dv./(h^2);
     
 end
