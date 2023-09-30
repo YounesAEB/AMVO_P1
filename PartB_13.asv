@@ -9,12 +9,7 @@ clc; clear; close all;
 % Input parameters
 N  = 3;
 L  = 1;                % domain size
-a = 1;
-for t=0:a:10
-    disp(t);
-   a=2;
-    disp(t);
-end
+for t=0:
 up = zeros(N+2,N+2);
 vp = zeros(N+2,N+2);
 vp = haloUpdate(vp);
