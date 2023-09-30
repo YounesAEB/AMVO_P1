@@ -9,10 +9,8 @@ function [A] = computeMatrixA(N)
             aux(i,j) = (i-1)+N*(j-2);                        
         end
     end
-    aux(:,N+2)    = aux(:,2);
-    aux(:,1)    = aux(:,N+1);
-    aux(N+2,:)    = aux(2,:);
-    aux(1,:)    = aux(N+1,:);
+
+    aux = haloUpdate(aux);
 
     for j=2:N+1
         for i=2:N+1
