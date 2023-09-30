@@ -11,9 +11,9 @@ N  = 3;
 L  = 1;                % domain size
 
 up = zeros(N+2,N+2);
+up(2,3) = 1; % imbalance
 vp = zeros(N+2,N+2);
 vp = haloUpdate(vp);
-up(2,3) = 1; % imbalance
 up = haloUpdate(up);
 [d] = diverg(up,vp,L);
 [b] = field2vector(d);
