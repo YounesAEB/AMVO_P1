@@ -7,7 +7,7 @@
 clc; clear; close all;
 
 % Input parameters
-Naux    = [8,16,32,64]; % mesh size
+Naux    = [10]; % mesh size
 L       = 1;                % domain size
 e       = zeros(size(Naux,2),1);
 Re = 100;   % Desired Reynolds number 
