@@ -56,16 +56,21 @@ end
 % printField(d,'up divergenge','%+.3e ');
 [b] = field2vector(d);
 p=A1*b;
-% p=minres(A,b,1e-8,300);
-[pressure] = vector2field(p);
-pressure = haloUpdate(pressure);
-[gx,gy] = grad(pressure,L);
+[pseudo] = vector2field(p);
+pseudo = haloUpdate(pseudo);
+[gx,gy] = grad(pseudo,L);
 gx = haloUpdate(gx);
 gy = haloUpdate(gy);
 u_next = up - gx;
 u_next = haloUpdate(u_next);
 v_next = vp - gy;
 v_next = haloUpdate(v_next);
+p_next = (pseudo*rho)/time_step;
+pressure(:,:,it+1) = p_next;
+if it==1
+    
+    
+   
 
 % Prove the next step velocity field has zero divergence
 [proof] = diverg(u_next,v_next,L);
@@ -84,18 +89,22 @@ pa = haloUpdate(pa);
 % Error calculation
 error_u(it) = max(max(abs(ua-un)));
 error_v(it) = max(max(abs(va-vn)));
+% error_u(it) = max(max(abs(ua-u_next)));
+% error_v(it) = max(max(abs(va-v_next)));
 
 delta_pa = pa-pa(2,2);
-delta_pressure = pressure-pressure(2,2);
+delta_pressure = p_next-p_next(2,2);
 error_p(it) = max(max(abs(delta_pa-delta_pressure)));
 
 % Save information for post-process (saving just 1 coordinate information)
 u(it)    = un(2,2);
 v(it)    = vn(2,2);
-u3(it)   = exp(-8*pi*pi*nu*t)*cos(2*pi*xsu(2,2))*sin(2*pi*ysu(2,2));
-v3(it)   = exp(-8*pi*pi*nu*t)*-cos(2*pi*ysv(2,2))*sin(2*pi*xsv(2,2));
-p2(it)   = delta_pressure(4,4);
-pa2(it)  = delta_pa(4,4);
+% u(it)    = u_next(2,2);
+% v(it)    = v_next(2,2);
+u3(it)   = ua(2,2);
+v3(it)   = va(2,2);
+p2(it)   = delta_pressure(2,3);
+pa2(it)  = delta_pa(2,3);
 time(it) = t;
 % Save information for next time-step
 u_before = un;
@@ -126,5 +135,5 @@ loglog(tamany,e);
 hold on
 loglog(tamany,tamany.*tamany);
 loglog(tamany,ep);
-plot_streamlines(xsv, ysu, u_ne, v);
+
 

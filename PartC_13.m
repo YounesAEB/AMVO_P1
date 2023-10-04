@@ -20,6 +20,7 @@ N                   = Naux(i);
 h                   = L/N;   % Cell size
 t                   = 0;     % Initial time
 it                  = 1;     % Iterations counter;
+pressure            = zeros(N+2,N+2,1);
 [xsu,ysu,xsv,ysv]   = setCoordinates(N,L); % Staggered mesh coordinates
 [A] = computeMatrixA(N);
 A1 = inv(A);
@@ -66,6 +67,13 @@ u_next = haloUpdate(u_next);
 v_next = vp - gy;
 v_next = haloUpdate(v_next);
 p_next = (pseudo*rho)/time_step;
+%Para error con pn+1
+pressure(:,:,it) = p_next;
+%Para error con pn
+% pressure(:,:,it+1) = p_next;
+% if it==1
+%     pressure(:,:,1) = p_next;    
+% end
 
 % Prove the next step velocity field has zero divergence
 [proof] = diverg(u_next,v_next,L);
@@ -88,7 +96,7 @@ error_v(it) = max(max(abs(va-vn)));
 % error_v(it) = max(max(abs(va-v_next)));
 
 delta_pa = pa-pa(2,2);
-delta_pressure = p_next-p_next(2,2);
+delta_pressure = pressure(:,:,it)-pressure(2,2,it);
 error_p(it) = max(max(abs(delta_pa-delta_pressure)));
 
 % Save information for post-process (saving just 1 coordinate information)
@@ -129,7 +137,6 @@ figure ()
 loglog(tamany,e);
 hold on
 loglog(tamany,tamany.*tamany);
-figure ()
-plot(Naux,ep);
+loglog(tamany,ep);
 
 
