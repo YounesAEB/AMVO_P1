@@ -7,9 +7,11 @@
 clc; clear; close all;
 
 % Input parameters
-Naux    = [10]; % mesh size
+Naux    = [8,16,32]; % mesh size
 L       = 1;                % domain size
-e       = zeros(size(Naux,2),1);
+rho     = 1.225; % density
+e       = zeros(size(Naux,2),1); % velocity error vector preallocation
+ep      = zeros(size(Naux,2),1); % pressure error vector preallocation
 Re = 100;   % Desired Reynolds number 
 
 for i=1:size(Naux,2)
@@ -19,6 +21,8 @@ h                   = L/N;   % Cell size
 t                   = 0;     % Initial time
 it                  = 1;     % Iterations counter;
 [xsu,ysu,xsv,ysv]   = setCoordinates(N,L); % Staggered mesh coordinates
+[A] = computeMatrixA(N);
+A1 = inv(A);
 while t<=2
 %% Initial velocity condition
 if t==0
@@ -51,17 +55,17 @@ if max(max(abs(predictor_proof)))<1e-10
 end
 % printField(d,'up divergenge','%+.3e ');
 [b] = field2vector(d);
-[A] = computeMatrixA(N);
-p=A\b;
-[pseudo_p] = vector2field(p);
-pseudo_p = haloUpdate(pseudo_p);
-[gx,gy] = grad(pseudo_p,L);
+p=A1*b;
+[pseudo] = vector2field(p);
+pseudo = haloUpdate(pseudo);
+[gx,gy] = grad(pseudo,L);
 gx = haloUpdate(gx);
 gy = haloUpdate(gy);
 u_next = up - gx;
 u_next = haloUpdate(u_next);
 v_next = vp - gy;
 v_next = haloUpdate(v_next);
+p_next = (pseudo*rho)/time_step;
 
 % Prove the next step velocity field has zero divergence
 [proof] = diverg(u_next,v_next,L);
@@ -75,14 +79,27 @@ ua = exp(-8*pi*pi*nu*t)*cos(2*pi*xsu).*sin(2*pi*ysu);
 ua = haloUpdate(ua);
 va = exp(-8*pi*pi*nu*t)*-cos(2*pi*ysv).*sin(2*pi*xsv);
 va = haloUpdate(va);
+pa = -rho*exp(-8*pi*pi*nu*t)*exp(-8*pi*pi*nu*t)*((cos(2*pi*xsv).^2)/2 + (cos(2*pi*ysu).^2)/2);
+pa = haloUpdate(pa);
 % Error calculation
 error_u(it) = max(max(abs(ua-un)));
 error_v(it) = max(max(abs(va-vn)));
+% error_u(it) = max(max(abs(ua-u_next)));
+% error_v(it) = max(max(abs(va-v_next)));
+
+delta_pa = pa-pa(2,2);
+delta_pressure = p_next-p_next(2,2);
+error_p(it) = max(max(abs(delta_pa-delta_pressure)));
+
 % Save information for post-process (saving just 1 coordinate information)
-u(it)    = un(3,3);
-v(it)    = vn(3,3);
-u3(it)   = exp(-8*pi*pi*nu*t)*cos(2*pi*xsu(3,3))*sin(2*pi*ysu(3,3));
-v3(it)   = exp(-8*pi*pi*nu*t)*-cos(2*pi*ysv(3,3))*sin(2*pi*xsv(3,3));
+u(it)    = un(2,2);
+v(it)    = vn(2,2);
+% u(it)    = u_next(2,2);
+% v(it)    = v_next(2,2);
+u3(it)   = ua(2,2);
+v3(it)   = va(2,2);
+p2(it)   = delta_pressure(2,3);
+pa2(it)  = delta_pa(2,3);
 time(it) = t;
 % Save information for next time-step
 u_before = un;
@@ -98,7 +115,12 @@ plot(time,u,time,u3);
 hold on
 plot(time,v,time,v3);
 hold off
-e(i) = max(max(error_u),max(error_v));
+
+figure ()
+plot(time,p2,time,pa2);
+
+e(i)    = max(max(error_u),max(error_v));
+ep(i)   = max(error_p);
 end
 
 %% POST PROCESSING
@@ -107,4 +129,7 @@ figure ()
 loglog(tamany,e);
 hold on
 loglog(tamany,tamany.*tamany);
+figure ()
+plot(Naux,ep);
+
 
