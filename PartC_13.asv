@@ -103,11 +103,11 @@ delta_pa = pa-pa(2,2);
 delta_pressure = pressure(:,:,it)-pressure(2,2,it);
 error_p(it) = max(max(abs(delta_pa-delta_pressure)));
 
-% Save information for post-process (saving just 1 coordinate information)
-u23(it)    = un(2,3);
-v23(it)    = vn(2,3);
-ua23(it)   = ua(2,3);
-va23(it)   = va(2,3);
+% Save information for post-process (saving just 1 coordinate's information)
+u(it)    = un(2,2);
+v(it)    = vn(2,2);
+u23(it)   = ua(2,2);
+v23(it)   = va(2,2);
 p23(it)   = delta_pressure(2,3);
 pa23(it)  = delta_pa(2,3);
 time(it) = t;
@@ -121,9 +121,9 @@ it = it + 1;
 t  = t + time_step;
 end
 figure ()
-plot(time,u23,time,ua23);
+plot(time,u,time,u23);
 hold on
-plot(time,v23,time,va23);
+plot(time,v,time,v23);
 hold off
 
 figure ()
