@@ -1,19 +1,18 @@
 function [cu_an,cv_an,du_an,dv_an] = computeAnalyticValues (u_sym,v_sym,xsu,xsv,ysu,ysv)
-% computeAnalyticValues derivates and calculates the convective and diffusive
-% term using the anal expressions
-% TBD: symbolic calculation of the expressions
-% Optional: Integral Calculation
+% computeAnalyticValues derivates and computes the convective and diffusive
+% term using the analytical expressions
 % u: horizontal velocity field
 % v: vertical velocity field
 % N: mesh size
 % L: domain size
 % h: cell size
+
 syms x y 
 
 %     cu_sym = u_sym*diff(u_sym,x)+v_sym*diff(u_sym,y);
 %     cv_sym = u_sym*diff(v_sym,x)+v*diff(v_sym,y);
-    cu_sym = diff(u_sym*u_sym,x)+diff(u_sym*v_sym,y);  % conservative
-    cv_sym = diff(v_sym*u_sym,x)+diff(v_sym*v_sym,y);  % conservative
+    cu_sym = diff(u_sym*u_sym,x)+diff(u_sym*v_sym,y);  % conservative expression
+    cv_sym = diff(v_sym*u_sym,x)+diff(v_sym*v_sym,y);  % conservative expression
 
     du_sym = diff(u_sym,x,x)+diff(u_sym,y,y);
     dv_sym = diff(v_sym,x,x)+diff(v_sym,y,y);

@@ -1,8 +1,6 @@
 function [F] = haloUpdate(F)
-% halo_update(F)updates the F values of the halo cells
+% haloUpdate(F)updates the F values of the halo cells
 % F: field to be updated
-% Written by: Group 13
-% Note: function to be used with uniform meshes
 
     N           = size(F,1)-2; % mesh size
     F(:,N+2)    = F(:,2); % right-most column gets the first mesh column values

@@ -1,5 +1,5 @@
 function [du] = computeDiffusiveTerm_u(u,L)
-% diffusive_u(u,L) integrates the horizontal diffusive term
+% computeDiffusiveTerm_u(u,L) integrates the horizontal diffusive term
 % du: diffusive term horizontal velocity
 % h: cell size
 % u: horizontal velocity field

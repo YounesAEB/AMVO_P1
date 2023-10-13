@@ -1,5 +1,5 @@
 function [cu] = computeConvectiveTerm_u(u,v,L)
-% convective_u(u,v,L) integrates the horizontal convective term
+% computeConvectuveTerm_u(u,v,L) integrates the horizontal convective term
 % cu: convective term horizontal velocity
 % h: cell size
 % u: horizontal velocity field

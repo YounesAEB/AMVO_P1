@@ -1,18 +1,17 @@
-function plot_streamlines(x_m, y_m, u, v)
-% plot_streamlines(x_m, y_m, u, v) plots the streamlines of the velocity
-% field u,v
-% Isaac Garcia, Alex Martinez, Pau Romeu, Adriana Vescovi 2021
-% Input:
-%   u,v = are the horizontal and vertical velocities
-%   x_m,y_m = are the coordinates of each Control Volume
+function plotStreamlines(u,v,xsv,ysu)
+% To plot the streamlines of the velocity field u,v
+% xc = xsv, yc = ysu
+% Group 13, 2023.
     
-    N = size(x_m, 1);
-    x_m(N, :) = 1;
-    y_m(:, N) = 1;
+    xc      = xsv;
+    yc      = ysu;
+    N       = size(xc, 1);
+    xc(N,:) = 1;
+    yc(:,N) = 1;
     
 
     figure();
-    streamslice(x_m(:,2), y_m(2,:)',u,v, 1.5);
+    streamslice(xc(:,2), yc(2,:)',u,v, 1.5);
     xlabel('x [m]');
     ylabel('y [m]');
     title('Streamlines of the resultant velocity field');
@@ -23,7 +22,7 @@ function plot_streamlines(x_m, y_m, u, v)
     
     figure();
     module_v = sqrt(u.^2 + v.^2);
-    s = surf(x_m(:,2), y_m(2,:)', module_v);
+    s = surf(xc(:,2), yc(2,:)', module_v);
     colormap turbo;
     s.EdgeColor = 'none';
     shading interp;
@@ -40,4 +39,3 @@ function plot_streamlines(x_m, y_m, u, v)
     cb.Label.String = 'Absolute velocity (m/s)';
     
 end
-

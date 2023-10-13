@@ -2,7 +2,7 @@ function [xsu,ysu,xsv,ysv] = setCoordinates(N,L)
 % setCoordinates set the coordinates of the points associated to each
 % velocity component u and v.
 % xsu and ysu are the staggered coordinates associated to u.
-% xsv and ysv are the staggered coordinates associated to u.
+% xsv and ysv are the staggered coordinates associated to v.
 
     xsu = zeros(N+2,N+2);
     ysu = zeros(N+2,N+2);

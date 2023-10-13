@@ -10,6 +10,7 @@ clc; clear; close all;
 Naux    = [8,16,32,64,128]; % mesh size
 L       = 1;                % domain size
 error   = zeros(size(Naux,2),4);
+
 % Initial velocity condition
 syms x y
 u_sym = 10*cos(2*pi*x).*sin(2*pi*y);

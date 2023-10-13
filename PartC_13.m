@@ -7,12 +7,12 @@
 clc; clear; close all;
 
 % Input parameters
-Naux    = [8,16,32]; % mesh size
-L       = 1;                % domain size
+Naux    = [8,16]; % mesh size
+L       = 1; % domain size
 rho     = 1.225; % density
 e       = zeros(size(Naux,2),1); % velocity error vector preallocation
 ep      = zeros(size(Naux,2),1); % pressure error vector preallocation
-Re = 100;   % Desired Reynolds number 
+Re      = 100;   % Desired Reynolds number 
 
 for i=1:size(Naux,2)
 % Preliminary steps 
@@ -141,5 +141,7 @@ hold on
 loglog(tamany,tamany.*tamany);
 loglog(tamany,ep);
 legend('e_vel','h^2','e_press');
+
+plotStreamlines(un,vn,xsv,ysu);
 
 

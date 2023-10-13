@@ -7,25 +7,28 @@
 clc; clear; close all;
 
 % Input parameters
+L  = 1; % domain size
 N  = 3;
-L  = 1;                % domain size
 
+% Velocity fields computation
 up = zeros(N+2,N+2);
-up(2,3) = 1; % imbalance
+up(3,3) = 1; % Imbalance, no null divergent condition
+up = haloUpdate(up);
+
 vp = zeros(N+2,N+2);
 vp = haloUpdate(vp);
-up = haloUpdate(up);
-[d] = diverg(up,vp,L);
-[b] = field2vector(d);
-[A] = computeMatrixA(N);
-p=A\b;
-[pseudo] = vector2field(p);
-pseudo = haloUpdate(pseudo);
-[gx,gy] = grad(pseudo,L);
-gx = haloUpdate(gx);
-gy = haloUpdate(gy);
-un = up - gx;
-un = haloUpdate(un);
-vn = vp - gy;
-vn = haloUpdate(vn);
+
+% Pseudo-pressure computation
+[d,pseudoP] = compute_pseudoP(up,vp,L);
+printField(d, 'divergence initial velocity field ', ' %+.3e '); % Proof there are non-zero terms
+
+% Next velocity computation
+[un,vn] = computeNextVelocityField(up,vp,pseudoP,L);
+
+% Null divergence proof of the new velocity field
 [proof] = diverg(un,vn,L);
+printField(proof, 'divergence next velocity field', ' %+.3e ');
+
+% Post processing
+plotVelocityField(up,vp,L);
+plotVelocityField(un,vn,L);
