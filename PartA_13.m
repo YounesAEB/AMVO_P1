@@ -13,7 +13,7 @@ error   = zeros(size(Naux,2),4);
 
 % Initial velocity condition
 syms x y
-u_sym = 10*cos(2*pi*x).*sin(2*pi*y);
+u_sym = cos(2*pi*x).*sin(2*pi*y);
 v_sym = -sin(2*pi*x).*cos(2*pi*y);
 
 for i=1:size(Naux,2)

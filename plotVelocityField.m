@@ -28,7 +28,9 @@ function plotVelocityField (u,v,L)
     axis equal
     axis padded;
     title('Velocity field')
-    xlabel('x [m]')
-    ylabel('y [m]')
+    xlabel('x (m)')
+    ylabel('y (m)')
     hold off;
+    grid on
+    grid minor
 end
