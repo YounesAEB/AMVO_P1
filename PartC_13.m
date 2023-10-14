@@ -32,7 +32,7 @@ u_before = un; % Initially un = un-1
 v_before = vn; % Initially vn = vn-1 
 
 % Computation of the kinematic viscosity in order to Re=100
-nu = (L*max(max(max(abs(un),abs(vn)))))/Re;
+nu = (L*max(max(sqrt(un.^2+vn.^2))))/Re;
 
 % Inverse matrix computation
 [A] = computeMatrixA(N);
