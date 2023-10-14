@@ -40,6 +40,6 @@ for i=1:size(Naux,2)
 end
 
 % Results plot
-plotError(error,L,Naux);
+plotConvectiveAndDiffusiveError(error,L,Naux);
 
 
