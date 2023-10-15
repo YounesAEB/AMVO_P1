@@ -27,7 +27,7 @@ function plotVelocityField (u,v,L)
  
     axis equal
     axis padded;
-    title('Velocity field')
+    title('Velocity field distribution')
     xlabel('x (m)')
     ylabel('y (m)')
     set(gca, 'TickLabelInterpreter', 'latex', 'FontSize',16);
