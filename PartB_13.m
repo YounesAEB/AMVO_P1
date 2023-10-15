@@ -22,14 +22,14 @@ vp = haloUpdate(vp);
 [A] = computeMatrixA(N);
 A1 = inv(A);
 [d,pseudoP] = compute_pseudoP(up,vp,A1,L);
-printField(d, 'divergence initial velocity field ', ' %+.3e '); % Proof there are non-zero terms
+printField(d, 'divergence initial velocity ', ' %+.3e '); % Proof there are non-zero terms
 
 % Next velocity computation
 [un,vn] = computeNextVelocityField(up,vp,pseudoP,L);
 
 % Null divergence proof of the new velocity field
 [proof] = diverg(un,vn,L);
-printField(proof, 'divergence next velocity field', ' %+.3e ');
+printField(proof, 'divergence next velocity ', ' %+.3e ');
 
 % Post processing
 plotVelocityField(up,vp,L);
