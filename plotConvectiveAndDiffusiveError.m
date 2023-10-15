@@ -5,6 +5,7 @@ function plotConvectiveAndDiffusiveError(error,L,N)
     set(groot,'defaultAxesTickLabelInterpreter','latex');
     set(groot,'defaulttextinterpreter','latex');
     set(groot,'defaultLegendInterpreter','latex');
+
     
     h = L./N;
     
@@ -17,6 +18,7 @@ function plotConvectiveAndDiffusiveError(error,L,N)
     legend('x-axis convective error','x-axis diffusive error','$h^2$','Location','southeast');
     xlabel('$h$')
     ylabel('error')
+    set(gca, 'TickLabelInterpreter', 'latex', 'FontSize',16);
     grid on
     grid minor
     axis padded
@@ -30,6 +32,7 @@ function plotConvectiveAndDiffusiveError(error,L,N)
     legend('y-axis convective error','y-axis diffusive error','$h^2$','Location','southeast');
     xlabel('$h$')
     ylabel('error')
+    set(gca, 'TickLabelInterpreter', 'latex', 'FontSize',16);
     grid on
     grid minor
     axis padded

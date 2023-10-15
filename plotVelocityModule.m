@@ -30,6 +30,7 @@ c.Label.Interpreter = 'latex';
 grid on;
 grid minor;
 axis equal;
+set(gca, 'TickLabelInterpreter', 'latex', 'FontSize',16);
 xlim([0 1]);
 ylim([0 1]);
 

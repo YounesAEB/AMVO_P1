@@ -13,6 +13,7 @@ legend('$p^n$','$p^{an}$')
 title("N=" + N + " elements")
 xlabel('time (s)')
 ylabel("Pressure at point (" + Qx + "," + Qy +")")
+set(gca, 'TickLabelInterpreter', 'latex', 'FontSize',16);
 grid on
 grid minor
 axis padded

@@ -13,6 +13,7 @@ legend('$u^n$','$v^n$','$u_{an}$','$v_{an}$')
 title("N=" + N + " elements")
 xlabel('time (s)')
 ylabel("Velocity at point (" + Qx + "," + Qy +")")
+set(gca, 'TickLabelInterpreter', 'latex', 'FontSize',16);
 grid on
 grid minor
 axis padded

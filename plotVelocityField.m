@@ -30,6 +30,7 @@ function plotVelocityField (u,v,L)
     title('Velocity field')
     xlabel('x (m)')
     ylabel('y (m)')
+    set(gca, 'TickLabelInterpreter', 'latex', 'FontSize',16);
     hold off;
     grid on
     grid minor

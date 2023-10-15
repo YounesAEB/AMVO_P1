@@ -22,6 +22,7 @@ title('Velocity field streamlines');
 axis equal;
 xlim([0 1]);
 ylim([0 1]);
+set(gca, 'TickLabelInterpreter', 'latex', 'FontSize',16);
 grid on;
 grid minor;
 axis padded;

@@ -18,6 +18,7 @@ xlabel('h')
 ylabel('error')
 grid on
 grid minor
+set(gca, 'TickLabelInterpreter', 'latex', 'FontSize',16);
 axis padded
 
 end
