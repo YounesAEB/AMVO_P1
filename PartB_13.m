@@ -8,7 +8,7 @@ clc; clear; close all;
 
 % Input parameters
 L  = 1; % domain size
-N  = 8;
+N  = 10;
 
 % Velocity fields computation
 up = zeros(N+2,N+2);
