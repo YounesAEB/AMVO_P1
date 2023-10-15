@@ -11,7 +11,7 @@ loglog(h,errorVelocity,"Marker","o");
 hold on
 loglog(h,errorPressure,"Marker","o");
 loglog(h,h.*h);
-legend('$error_{velocity}$','$error_{pressure}$','$h^2$',Location='northwest');
+legend('$error_{velocity}$','$error_{pressure}$','$h^2$','Location','northwest');
 hold off
 
 xlabel('h')
