@@ -35,11 +35,11 @@ for i=1:size(Naux,2)
     [cu_an,cv_an,du_an,dv_an] = computeAnalyticValues(u_sym,v_sym,xsu,xsv,ysu,ysv);
     
     % Error computation
-    [ecu,ecv,edu,edv]   = computeConvectiveAndDiffusiveError(cu,cv,du,dv,cu_an,cv_an,du_an,dv_an,L);
+    [ecu,ecv,edu,edv]   = computeConvAndDiffError(cu,cv,du,dv,cu_an,cv_an,du_an,dv_an,L);
     error(i,:)          = [ecu,ecv,edu,edv];
 end
 
 % Results plot
-plotConvectiveAndDiffusiveError(error,L,Naux);
+plotConvAndDiffError(error,L,Naux);
 
 

@@ -1,4 +1,4 @@
-function [ecu,ecv,edu,edv] = computeConvectiveAndDiffusiveError(cu,cv,du,dv,cu_an,cv_an,du_an,dv_an,L)
+function [ecu,ecv,edu,edv] = computeConvAndDiffError(cu,cv,du,dv,cu_an,cv_an,du_an,dv_an,L)
 % computeError computes the maximum error between the
 % an and numeric solutions
 % ecu: error in the convective term of the horizontal velocity
