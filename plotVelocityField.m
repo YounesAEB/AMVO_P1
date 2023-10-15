@@ -22,7 +22,7 @@ function plotVelocityField (u,v,L)
     ysu = haloUpdate(ysu);
     quiver(xsu(1:N+1,2:N+1), ysu(1:N+1,2:N+1), u(1:N+1,2:N+1), zeros(N+1,N), 0, 'LineWidth', 1.5, 'color', '#f44336');
     
-    xsv = halo_update(xsv);
+    xsv = haloUpdate(xsv);
     quiver(xsv(2:N+1,1:N+1), ysv(2:N+1,1:N+1), zeros(N,N+1), v(2:N+1,1:N+1), 0, 'LineWidth', 1.5, 'color', '#f44336');
  
     axis equal
