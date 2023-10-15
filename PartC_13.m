@@ -52,7 +52,7 @@ while t<=2
     vp = vn + time_step*((3/2)*Rnv - (1/2)*Rnv_before);
    
     % Pseudo-pressure computation
-    [d,pseudoP] = compute_pseudoP(up,vp,L);
+    [d,pseudoP] = compute_pseudoP(up,vp,A1,L);
     
     % Next velocity computation
     [u_next,v_next] = computeNextVelocityField(up,vp,pseudoP,L);
@@ -98,6 +98,12 @@ while t<=2
     it = it + 1;
     t  = t + time_step;
 end
+
+% 
+[proof] = diverg(un,vn,L);
+printField(proof, 'divergence next velocity field for elements', ' %+.3e ');
+msg = sprintf('Problem solved for N=%i elements', N);
+disp(msg);
 
 % Results plot for each N
 plotNumericAnalyticVelocity(time,uQ,uaQ,vQ,vaQ,N,Qx,Qy);

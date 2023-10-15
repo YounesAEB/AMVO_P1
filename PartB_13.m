@@ -19,7 +19,9 @@ vp = zeros(N+2,N+2);
 vp = haloUpdate(vp);
 
 % Pseudo-pressure computation
-[d,pseudoP] = compute_pseudoP(up,vp,L);
+[A] = computeMatrixA(N);
+A1 = inv(A);
+[d,pseudoP] = compute_pseudoP(up,vp,A1,L);
 printField(d, 'divergence initial velocity field ', ' %+.3e '); % Proof there are non-zero terms
 
 % Next velocity computation
